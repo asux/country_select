@@ -3,7 +3,7 @@ module CountrySelect
   module TagHelper
     def country_option_tags
       option_tags_options = {
-        :selected => @options.fetch(:selected) { value(@object) },
+        :selected => @options.fetch(:selected) { selected_value },
         :disabled => @options[:disabled]
       }
 
@@ -94,6 +94,12 @@ module CountrySelect
 
     def html_safe_newline
       "\n".html_safe
+    end
+
+    def selected_value
+      value = value(@object)
+      return value.alpha2 if value.respond_to?(:alpha2)
+      value
     end
   end
 end
